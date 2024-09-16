@@ -7,6 +7,7 @@ plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsCompose)
     alias(libs.plugins.compose.compiler)
+    alias(libs.plugins.google.gms.google.services)
 }
 
 kotlin {
@@ -56,6 +57,12 @@ kotlin {
             //viewmodel
 
             implementation(libs.lifecycle.viewmodel)
+            //datetime
+            implementation(libs.kotlinx.datetime)
+
+//            kmp fcm
+            implementation(libs.gitlive.firebase.messaging)
+
         }
     }
 }
@@ -95,5 +102,8 @@ android {
     dependencies {
         debugImplementation(compose.uiTooling)
     }
+}
+dependencies {
+    implementation(libs.firebase.messaging)
 }
 
