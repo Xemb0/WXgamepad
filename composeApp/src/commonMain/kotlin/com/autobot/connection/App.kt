@@ -1,76 +1,51 @@
 package com.autobot.connection
 
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
-import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
+import androidx.compose.runtime.Composable
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.autobot.connection.models.LastSean
-import kotlinx.coroutines.delay
-import kotlinx.datetime.Clock
-import kotlinx.datetime.LocalDateTime
-import kotlinx.datetime.TimeZone
-import kotlinx.datetime.toLocalDateTime
+import com.autobot.connection.theme.MyAppThemeComposable
+import dev.gitlive.firebase.Firebase
+import dev.gitlive.firebase.auth.auth
 import org.koin.compose.currentKoinScope
-import org.koin.core.scope.Scope
 
 @Composable
 fun App() {
-    MaterialTheme {
+    // Fetch auth service instance
+    val authService = AuthServiceImpl(auth = Firebase.auth)
+
+    // Koin ViewModel - You can use Koin's built-in koinViewModel function
+    val loginViewModel = LoginViewModel(authService)
+
+    // MaterialTheme Wrapper
+    MyAppThemeComposable {
+        // Create a navigation controller
         val navController = rememberNavController()
+
+        // Define the navigation host
         NavHost(
             navController = navController,
-            startDestination = "screenA"
+            startDestination = "LoginScreen"
         ) {
-            composable("screenA") {
-                val viewModel: MainViewModel = koinViewModel()
-                val timer by viewModel.timer.collectAsState()
-                Box(
-                    modifier = Modifier.fillMaxSize(),
-                    contentAlignment = Alignment.Center
-                ) {
-                    val lastSean = remember {
-                        listOf(
-                            LastSean("New York", TimeZone.of("America/New_York")),
-                            LastSean("Kolkata", TimeZone.of("Asia/Kolkata")),
-                            LastSean("London", TimeZone.of("Europe/London")),
-                        )
-                    }
+            // Define composable for the LoginScreen
+            composable("LoginScreen") {
+                LoginScreen(
+                    onLoginSuccess = {
+                        navController.navigate("HomeScreen")
+                    },
+                    viewModel = loginViewModel
+                )
+            }
 
-                    var citytime by remember {
-                        mutableStateOf(listOf<Pair<LastSean, LocalDateTime>>())
-                    }
-
-                    LaunchedEffect(Unit) {
-                        while (true) {
-                            citytime = lastSean.map { sean ->
-                                val now = Clock.System.now()
-                                sean to now.toLocalDateTime(sean.timezone)
-                            }
-                            delay(1000)  // Update every second
-                        }
-                    }
-
-                    LazyColumn {
-                        items(citytime) { (sean, time) ->
-                            Text(text = "${sean.name}: $time")
-                        }
-                    }
-                }
+            // Add HomeScreen or other destinations as needed
+            composable("HomeScreen") {
+                // Your HomeScreen composable goes here
             }
         }
     }
 }
-
 @Composable
 inline fun <reified T: ViewModel> koinViewModel(): T {
     val scope = currentKoinScope()

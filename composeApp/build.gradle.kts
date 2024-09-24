@@ -42,7 +42,8 @@ kotlin {
         commonMain.dependencies {
             implementation(compose.runtime)
             implementation(compose.foundation)
-            implementation(compose.material)
+//            implementation(compose.material)
+            implementation(compose.material3)
             implementation(compose.ui)
             implementation(compose.components.resources)
             implementation(compose.components.uiToolingPreview)
@@ -62,6 +63,10 @@ kotlin {
 
 //            kmp fcm
             implementation(libs.gitlive.firebase.messaging)
+
+            //firebase
+
+            implementation(libs.firebase.auth)
 
         }
     }
@@ -105,5 +110,6 @@ android {
 }
 dependencies {
     implementation(libs.firebase.messaging)
+    implementation(libs.androidx.material3.android)
 }
 

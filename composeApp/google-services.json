@@ -1,13 +1,13 @@
 {
   "project_info": {
-    "project_number": "910031266203",
-    "project_id": "connection-81332",
-    "storage_bucket": "connection-81332.appspot.com"
+    "project_number": "82789584474",
+    "project_id": "connection-918c9",
+    "storage_bucket": "connection-918c9.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:910031266203:android:c743d2474e5d61f3b4013e",
+        "mobilesdk_app_id": "1:82789584474:android:1607a6b2ac1022c879d263",
         "android_client_info": {
           "package_name": "com.autobot.connection"
         }
@@ -15,7 +15,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyB9UIXlRYFCupkoPHjOlPOQGSoBJUW6dxQ"
+          "current_key": "AIzaSyB-4Z8JubZcouefQrArRRQz7Okheo7Q4MU"
         }
       ],
       "services": {
