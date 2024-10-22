@@ -9,6 +9,9 @@ import androidx.navigation.compose.rememberNavController
 import com.autobot.connection.theme.MyAppThemeComposable
 import dev.gitlive.firebase.Firebase
 import dev.gitlive.firebase.auth.auth
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.IO
+import kotlinx.coroutines.withContext
 import org.koin.compose.currentKoinScope
 
 @Composable
@@ -46,6 +49,9 @@ fun App() {
         }
     }
 }
+
+
+
 @Composable
 inline fun <reified T: ViewModel> koinViewModel(): T {
     val scope = currentKoinScope()
